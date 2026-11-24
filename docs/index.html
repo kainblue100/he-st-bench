@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="refresh" content="120">
+<title>H&amp;E 预测空间转录组：同一套数据</title>
+<style>
+  :root { color-scheme: light; }
+  body { margin: 0; background: #f4f1ea; color: #1c1917; font: 17px/1.65 "Source Han Sans SC", "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+  main { max-width: 1180px; margin: 0 auto; padding: 40px 22px 80px; }
+  h1 { font-size: 32px; line-height: 1.25; margin: 0 0 10px; }
+  h2 { font-size: 24px; margin: 36px 0 8px; }
+  p { max-width: 78ch; }
+  a { color: #9a3412; }
+  .when { color: #57534e; font-size: 14px; }
+  table { border-collapse: collapse; width: 100%; margin: 14px 0; background: white; font-size: 14px; }
+  th, td { border: 1px solid #e7e5e4; padding: 7px 8px; text-align: left; vertical-align: top; }
+  th { background: #292524; color: white; font-weight: 600; }
+  td.num { font-variant-numeric: tabular-nums; text-align: right; }
+  tr.done td { background: #f3f7fb; }
+  img { max-width: 100%; height: auto; background: white; border: 1px solid #e7e5e4; }
+  .pair { display: grid; grid-template-columns: 1.2fr 1fr; gap: 12px; }
+  @media (max-width: 800px) { .pair { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<main>
+<h1>同一套 HER2ST 上比较 H&amp;E 预测空间转录组</h1>
+<p>公众号文章复述的是 Wang、Chan、Fu 等人 2025 年在 Nature Communications 的基准：11 种方法、五套空间转录组，再用 TCGA 乳腺癌看生存。这篇综述《Predicting spatial transcriptomics from histology images》（Exploration，2026）又列了 40 多种模型。这里把两边的工具收在一页，测评只用一套数据。</p>
+<p class="when">页面每两分钟刷新。格子里的数只在这次计算写进结果文件之后出现。更新时间写在表下。</p>
+
+<h2>用哪套数据</h2>
+<p>HER2 阳性乳腺癌的空间转录组，Andersson 等人，Zenodo <a href="https://doi.org/10.5281/zenodo.4751624">10.5281/zenodo.4751624</a>。服务器上已有 36 张切片、8 个供体，路径 <span class="when">/mnt/storage/bzhang/morphgate/data/her2st</span>。划分跟 Wang 的基准和 MorphGate 已经用过的相同：四折是病人 AB、CD、EF、GH，同一病人的相邻切片留在同一折。每一轮两折训练，一折验证，一折测试。基因是全体切片共有、log1p(CP10k) 方差最高的 785 个。每个基因先在切片上算，再对病人平均，再对四个测试折平均。</p>
+<p>指标是 Pearson 相关、SSIM、互信息、AUC 和 NRMSE。公众号图里还有 Visium、肾癌、TCGA 生存和可用性评分。那些要用别的数据和人工可用性打分，这一页先不混进去。</p>
+
+<h2>公众号里的 11 个工具</h2>
+<p>文章对应的论文是 <a href="https://doi.org/10.1038/s41467-025-56618-y">10.1038/s41467-025-56618-y</a>。他们的复现代码在 <a href="https://github.com/SydneyBioX/HEtoSGEBench">SydneyBioX/HEtoSGEBench</a>，处理好的五套数据在 Zenodo <a href="https://doi.org/10.5281/zenodo.14602489">10.5281/zenodo.14602489</a>。各方法自己的仓库如下。EGN 和 DeepPT 的仓库这次还没对上，表里先空着，不写一个没打开过的地址。</p>
+<table>
+<thead><tr><th>方法</th><th>仓库</th><th>这次的状态</th></tr></thead>
+<tbody>
+<tr><td>DeepPT</td><td>还没对上</td><td>排队。原文是从图像推批量转录组，Wang 把它改去预测空间表达</td></tr>
+<tr><td>EGNv1</td><td>还没对上。<span class="when">biomed-AI/EGN 不存在</span></td><td>排队</td></tr>
+<tr><td>Hist2ST</td><td><a href="https://github.com/biomed-AI/Hist2ST">biomed-AI/Hist2ST</a></td><td>仓库已列入克隆队列</td></tr>
+<tr><td>THItoGene</td><td><a href="https://github.com/yrjia1015/THItoGene">yrjia1015/THItoGene</a></td><td>官方说明用 HER2ST，785 个基因</td></tr>
+<tr><td>EGNv2</td><td>还没对上</td><td>排队。综述里的名字是 EGGN</td></tr>
+<tr><td>DeepSpaCE</td><td><a href="https://github.com/tmonjo/DeepSpaCE">tmonjo/DeepSpaCE</a></td><td>仓库已列入克隆队列</td></tr>
+<tr><td>TCGN</td><td><a href="https://github.com/lugia-xiao/TCGN">lugia-xiao/TCGN</a></td><td>官方 <span class="when">train.py --fold</span> 是按切片留出。公平比较要改成上面的病人四折，改完才记数</td></tr>
+<tr><td>ST-Net</td><td><a href="https://github.com/bryanhe/ST-Net">bryanhe/ST-Net</a></td><td>仓库已列入克隆队列</td></tr>
+<tr><td>iStar</td><td><a href="https://github.com/daviddaiweizhang/istar">daviddaiweizhang/istar</a></td><td>它把斑点表达推到接近细胞的分辨率。Wang 把它放进了 11 个方法</td></tr>
+<tr><td>HisToGene</td><td><a href="https://github.com/maxpmx/HisToGene">maxpmx/HisToGene</a></td><td>仓库已列入克隆队列</td></tr>
+<tr><td>GeneCodeR</td><td><a href="https://github.com/AskExplain/GeneCodeR">AskExplain/GeneCodeR</a></td><td>R。仓库说明是扰动图像上的空间基因编码</td></tr>
+</tbody>
+</table>
+
+<h2>2026 综述里多出来的工具</h2>
+<p>综述是 <a href="https://www.sciexplor.com/exo/articles/EXO.2026.0020">Exploration，2026，EXO.2026.0020</a>。表 3 收到 2026 年 7 月 4 日，并且把 DeepPT 排除在外，因为它最初是为批量转录组写的。下面这些不在公众号的 11 个里面。已经打开过的仓库写了地址。其余只记名字，地址核对到了再补，避免写错链接。</p>
+<table>
+<thead><tr><th>方法</th><th>仓库</th><th>综述里和 HER2 或乳腺癌有关的一点</th></tr></thead>
+<tbody>
+<tr><td>BLEEP</td><td><a href="https://github.com/bowang-lab/BLEEP">bowang-lab/BLEEP</a></td><td>图像和表达做成对照嵌入，再用参考样本填查询图像</td></tr>
+<tr><td>TRIPLEX</td><td><a href="https://github.com/NEXGEM/TRIPLEX">NEXGEM/TRIPLEX</a></td><td>三种分辨率的图像一起用，材料里包含 HER2 乳腺癌</td></tr>
+<tr><td>BrST-Net</td><td><a href="https://github.com/Mamunur-20/BrSTNet">Mamunur-20/BrSTNet</a></td><td>在旧版乳腺癌空间转录组上预测高表达基因</td></tr>
+<tr><td>STimage</td><td><a href="https://github.com/BiomedicalMachineLearning/STimage">BiomedicalMachineLearning/STimage</a></td><td>材料里包含 HER2，也可以换成组织学基础模型</td></tr>
+<tr><td>GHIST</td><td>本次用的是斑点上的六个程序，代码在 MorphGate 仓库里</td><td>Fu 等人原文的深度网络报告 HER2 相关 0.16。那个数留在文献列，不画进这次的图</td></tr>
+<tr><td>NSL、XFuse、M2ORT、IGI-DL、HE2Gene、HEST-1k 岭回归、HistoSPACE、RankByGene、Stem、OmiCLIP、HECLIP、DANet、PRTS、SCellST、CMRCNet、UMPIRE、Path2Space、SEPAL、TransformerST、STFormer、ErwaNet、ResSAT、HGGEP、MclSTExp、STMCL、DeepSpot、STFlow、SPiRiT、STPath、PH2ST</td><td>仓库还在逐个打开</td><td>其中 Stem、STFlow、STPath、Path2Space、RankByGene、DeepSpot、PH2ST、UMPIRE 依赖 UNI、CONCH、GigaPath 这类要申请的基础模型权重。权重没有下来之前不记它们的相关</td></tr>
+</tbody>
+</table>
+
+<h2>这次已经能写上的数</h2>
+<p>同一套 HER2ST、同一套四折上，已经算完的是 MorphGate 去掉门控，和六个表达程序的 GHIST-spot。深度网络还没开始训。GPU0 上正在跑同一账户的 <span class="when">vcellx/train_cnn.py</span>（PID 2832434，约 2.3 GB）。深度模型等这块卡空出来再用 GPU0。GPU1 不用。</p>
+<table id="scores">
+<thead>
+<tr><th>方法</th><th>PCC</th><th>SSIM</th><th>互信息</th><th>AUC</th><th>NRMSE</th><th>耗时（秒）</th><th>这次的判断</th></tr>
+</thead>
+<tbody>
+<tr class="done"><td>MorphGate，去掉门控</td><td class="num">0.071</td><td class="num">0.045</td><td class="num">0.338</td><td class="num">0.570</td><td class="num">0.315</td><td class="num">0.15</td><td>相关和 SSIM 高于同一次的 GHIST-spot。它是染色特征加岭回归。全基因相关仍低于 GHIST 原文的 0.16</td></tr>
+<tr class="done"><td>GHIST-spot</td><td class="num">0.044</td><td class="num">0.018</td><td class="num">0.340</td><td class="num">0.554</td><td class="num">0.303</td><td class="num">9.57</td><td>表达被限制在 6 个程序里，SSIM 更低。这不是 Fu 等人训练过的那个网络</td></tr>
+<tr><td>上面列出的其余方法</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td>等官方代码在这四折上跑完再写优劣</td></tr>
+</tbody>
+</table>
+<p class="when">MorphGate 带门控的全基因相关是 0.025，因为没过门的基因填成训练集均值，所以主表用去掉门控的一行。GHIST 原文 0.16 来自 Fu 等人 Nature Methods 2025 的图 3，他们的基因名单和是否取最好一折都和这里不完全相同。</p>
+
+<div class="pair">
+<figure>
+<img src="figures/HER2ST_metrics.png" alt="HER2ST 上 MorphGate、去掉门控和 GHIST-spot 的 PCC、SSIM、互信息和 AUC">
+<figcaption>每个点是一个基因在四个测试折上的平均。目前只有这三种计算。其余方法的小提琴等逐基因分数写出来再加进去。</figcaption>
+</figure>
+<figure>
+<img src="figures/her2_fasn.png" alt="切片 B1 上 FASN 的实测和两种预测">
+<figcaption>测试折里的切片 B1，基因 FASN。左是实测，中是去掉门控的 MorphGate，右是 GHIST-spot。轮廓还在，高低被压扁了。</figcaption>
+</figure>
+</div>
+
+<h2>还要做的计算</h2>
+<p>官方仓库克隆到服务器 <span class="when">/mnt/storage/bzhang/he-st-bench/repos</span>。每个方法用它自己的模型，输入改成这 36 张切片和这四折，预测 785 个基因，再按同一套 PCC、SSIM、互信息、AUC、NRMSE 汇总。官方脚本若只能按切片留出，那个数单独记，不和这张表混在一行里。一个方法跑完，这一页的表和图就补上一行。</p>
+<p class="when">Wang 等，Nature Communications，2025，<a href="https://doi.org/10.1038/s41467-025-56618-y">10.1038/s41467-025-56618-y</a>。综述，Exploration，2026，<a href="https://www.sciexplor.com/exo/articles/EXO.2026.0020">EXO.2026.0020</a>。HER2ST，<a href="https://doi.org/10.5281/zenodo.4751624">10.5281/zenodo.4751624</a>。</p>
+</main>
+</body>
+</html>
