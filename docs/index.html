@@ -41,14 +41,14 @@
 <tbody>
 <tr><td>DeepPT</td><td>还没对上</td><td>排队。原文是从图像推批量转录组，Wang 把它改去预测空间表达</td></tr>
 <tr><td>EGNv1</td><td>还没对上。<span class="when">biomed-AI/EGN 不存在</span></td><td>排队</td></tr>
-<tr><td>Hist2ST</td><td><a href="https://github.com/biomed-AI/Hist2ST">biomed-AI/Hist2ST</a></td><td>仓库已列入克隆队列</td></tr>
+<tr><td>Hist2ST</td><td><a href="https://github.com/biomed-AI/Hist2ST">biomed-AI/Hist2ST</a></td><td>已克隆到服务器</td></tr>
 <tr><td>THItoGene</td><td><a href="https://github.com/yrjia1015/THItoGene">yrjia1015/THItoGene</a></td><td>官方说明用 HER2ST，785 个基因</td></tr>
 <tr><td>EGNv2</td><td>还没对上</td><td>排队。综述里的名字是 EGGN</td></tr>
-<tr><td>DeepSpaCE</td><td><a href="https://github.com/tmonjo/DeepSpaCE">tmonjo/DeepSpaCE</a></td><td>仓库已列入克隆队列</td></tr>
+<tr><td>DeepSpaCE</td><td><a href="https://github.com/tmonjo/DeepSpaCE">tmonjo/DeepSpaCE</a></td><td>已克隆到服务器</td></tr>
 <tr><td>TCGN</td><td><a href="https://github.com/lugia-xiao/TCGN">lugia-xiao/TCGN</a></td><td>官方 <span class="when">train.py --fold</span> 是按切片留出。公平比较要改成上面的病人四折，改完才记数</td></tr>
-<tr><td>ST-Net</td><td><a href="https://github.com/bryanhe/ST-Net">bryanhe/ST-Net</a></td><td>仓库已列入克隆队列</td></tr>
+<tr><td>ST-Net</td><td><a href="https://github.com/bryanhe/ST-Net">bryanhe/ST-Net</a></td><td>已克隆到服务器</td></tr>
 <tr><td>iStar</td><td><a href="https://github.com/daviddaiweizhang/istar">daviddaiweizhang/istar</a></td><td>它把斑点表达推到接近细胞的分辨率。Wang 把它放进了 11 个方法</td></tr>
-<tr><td>HisToGene</td><td><a href="https://github.com/maxpmx/HisToGene">maxpmx/HisToGene</a></td><td>仓库已列入克隆队列</td></tr>
+<tr><td>HisToGene</td><td><a href="https://github.com/maxpmx/HisToGene">maxpmx/HisToGene</a></td><td>已克隆到服务器</td></tr>
 <tr><td>GeneCodeR</td><td><a href="https://github.com/AskExplain/GeneCodeR">AskExplain/GeneCodeR</a></td><td>R。仓库说明是扰动图像上的空间基因编码</td></tr>
 </tbody>
 </table>
@@ -93,7 +93,7 @@
 </div>
 
 <h2>还要做的计算</h2>
-<p>官方仓库克隆到服务器 <span class="when">/mnt/storage/bzhang/he-st-bench/repos</span>。每个方法用它自己的模型，输入改成这 36 张切片和这四折，预测 785 个基因，再按同一套 PCC、SSIM、互信息、AUC、NRMSE 汇总。官方脚本若只能按切片留出，那个数单独记，不和这张表混在一行里。一个方法跑完，这一页的表和图就补上一行。</p>
+<p>13 个官方仓库已经克隆到服务器 <span class="when">/mnt/storage/bzhang/he-st-bench/repos</span>：Hist2ST、THItoGene、TCGN、ST-Net、DeepSpaCE、iStar、HisToGene、GeneCodeR、BLEEP、TRIPLEX、BrST-Net、STimage，以及 Wang 等人的复现框架 HEtoSGEBench。每个方法用它自己的模型，输入改成这 36 张切片和这四折，预测 785 个基因，再按同一套 PCC、SSIM、互信息、AUC、NRMSE 汇总。官方脚本若只能按切片留出，那个数单独记，不和这张表混在一行里。一个方法跑完，这一页的表和图就补上一行。</p>
 <p class="when">Wang 等，Nature Communications，2025，<a href="https://doi.org/10.1038/s41467-025-56618-y">10.1038/s41467-025-56618-y</a>。综述，Exploration，2026，<a href="https://www.sciexplor.com/exo/articles/EXO.2026.0020">EXO.2026.0020</a>。HER2ST，<a href="https://doi.org/10.5281/zenodo.4751624">10.5281/zenodo.4751624</a>。</p>
 </main>
 </body>
