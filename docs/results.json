@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-24T10:40:00+08:00",
+  "updated": "2026-11-24T16:50:00+08:00",
   "dataset": "HER2ST",
   "note": "图里的相关、SSIM、互信息、AUC、NRMSE 只来自这次在 HER2ST 病人四折上的计算。文献里各方法自己报告的相关不写进这些格子。",
   "gpu": "GPU0 上有 vcellx 的 train_cnn.py（PID 2832434）。深度模型等它让出 GPU0。不用 GPU1。",
@@ -24,5 +24,19 @@
       "nrmse": 0.3032,
       "seconds": 9.57
     }
-  ]
+  ],
+  "takano_xenium": {
+    "paper": "https://doi.org/10.1038/s41467-024-54671-7",
+    "kept_sections": ["tk_luad17", "tk_tsu20", "tk_tsu21", "tk_tsu23", "tk_tsu24", "tk_tsu25", "tk_tsu30", "tk_tsu35", "tk_tsu36", "tk_tsu41"],
+    "excluded_sections": ["tk_luad2", "tk_luad3", "tk_luad14", "tk_luad16", "tk_tsu27", "tk_tsu28", "tk_tsu33"],
+    "spots": 14968,
+    "genes": 302,
+    "pcc": 0.1118,
+    "ssim": 0.091,
+    "mi": 0.1348,
+    "auc": 0.5754,
+    "nrmse": 0.2245,
+    "hvg_pcc": 0.1575,
+    "svg_pcc": 0.2401
+  }
 }

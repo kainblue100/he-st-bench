@@ -92,6 +92,23 @@
 </figure>
 </div>
 
+<h2>Takano 肺腺癌 Xenium</h2>
+<p>Takano 等人 <a href="https://doi.org/10.1038/s41467-024-54671-7">Nature Communications 2024</a> 的 17 张 Xenium 肺腺癌，每张有一张配对 H&amp;E。细胞坐标和 H&amp;E 像素之间没有现成的配准文件。配准是在旋转、镜像、缩放和平移里搜索，让细胞云落在组织上，并且和切片轮廓的形状相关达到 0.35。10 张达到了：LUAD No17，TSU-20、21、23、24、25、30、35、36、41。叠加图上，红点沿着组织走。另外 7 张对不齐（LUAD No2、No3、No14、No16，TSU-27、28、33），没有进入下表。</p>
+<p>预测用的是 HER2ST 这一页上同一个 ResNet-18 嵌入：ImageNet 权重，512 维，验证折在岭回归、近邻、原型和两者的混合里选一个。斑点是 100 µm 的格子，一格至少 8 个细胞，一共 14,968 个格子。表达是格子内计数加总后的 log1p(CP10k)，基因是这个 302 基因的肺面板。10 个病人按名字轮流分成四折，一轮留出一折做测试、下一折做验证。高变基因是方差最高的 50 个，空间可变基因是 Moran 最高的 20 个。嵌入在 CPU 上算，没有占用 GPU。</p>
+<table>
+<thead><tr><th>指标</th><th>四折平均</th></tr></thead>
+<tbody>
+<tr><td>PCC</td><td class="num">0.112</td></tr>
+<tr><td>SSIM</td><td class="num">0.091</td></tr>
+<tr><td>互信息</td><td class="num">0.135</td></tr>
+<tr><td>AUC</td><td class="num">0.575</td></tr>
+<tr><td>NRMSE</td><td class="num">0.225</td></tr>
+<tr><td>高变基因 PCC</td><td class="num">0.158</td></tr>
+<tr><td>空间可变基因 PCC</td><td class="num">0.240</td></tr>
+</tbody>
+</table>
+<p class="when">上面 HER2ST 表里的数没有改。两张表的基因、格子大小和病人都不同，分开放。HER2ST 上 PCC 0.16、SSIM 0.10、高变基因 0.20、空间可变基因 0.27 这四条线仍然都没有达到。更新时间 2026-11-24 16:50。</p>
+
 <h2>还要做的计算</h2>
 <p>13 个官方仓库已经克隆到服务器 <span class="when">/mnt/storage/bzhang/he-st-bench/repos</span>：Hist2ST、THItoGene、TCGN、ST-Net、DeepSpaCE、iStar、HisToGene、GeneCodeR、BLEEP、TRIPLEX、BrST-Net、STimage，以及 Wang 等人的复现框架 HEtoSGEBench。每个方法用它自己的模型，输入改成这 36 张切片和这四折，预测 785 个基因，再按同一套 PCC、SSIM、互信息、AUC、NRMSE 汇总。官方脚本若只能按切片留出，那个数单独记，不和这张表混在一行里。一个方法跑完，这一页的表和图就补上一行。</p>
 <p class="when">Wang 等，Nature Communications，2025，<a href="https://doi.org/10.1038/s41467-025-56618-y">10.1038/s41467-025-56618-y</a>。综述，Exploration，2026，<a href="https://www.sciexplor.com/exo/articles/EXO.2026.0020">EXO.2026.0020</a>。HER2ST，<a href="https://doi.org/10.5281/zenodo.4751624">10.5281/zenodo.4751624</a>。</p>
